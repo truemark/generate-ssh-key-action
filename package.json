@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "generate-ssh-key-action",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "GitHub action used to generate an SSH key pair",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -25,7 +25,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.10.0"
+    "@actions/core": "^1.10.0",
+    "execa": "^7.1.1"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",

@@ -1,24 +1,50 @@
-<p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
-</p>
+# AWS EC2 Run Instance Action
 
-# Create a JavaScript Action using TypeScript
+[![LICENSE](https://img.shields.io/badge/license-BSD3-green)](LICENSE)
+[![Latest Release](https://img.shields.io/github/v/release/truemark/generate-ssh-key-action)](https://github.com/truemark/generate-ssh-key-action/releases)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/truemark/generate-ssh-key-action)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/truemark/generate-ssh-key-action)
+![build-test](https://github.com/truemark/generate-ssh-key-action/workflows/build-test/badge.svg)
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
+GitHub action used to generate an SSH key pair 
 
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
+## Examples
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+```yml
 
-## Create an action from this template
+```
 
-Click the `Use this Template` and provide the new repo details for your action
+You can use default-arm64 and default-amd64 to get the latest Amazon Linux ARM.
+You can also use the AMI ID of your own AMI.
 
-## Code in Main
+## Inputs
 
-> First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
+| Name                          | Type       | Required | Description                                                                                 |
+|-------------------------------|------------|----------|---------------------------------------------------------------------------------------------|
+| subnet-id                     | string     | Yes      | Subnet ID to launch the instance in                                                         |
+| security-group-id             | string     | Yes      | Security group to apply to the EC2 instance                                                 |
+| image-id                      | string     | Yes      | Image ID to use for the EC2 instance. Also accepts default-arm64 and default-amd64 options  |
+| instance-type                 | string     | Yes      | Instance type to use for the EC2 instance                                                   |
+| instance-profile              | string     | No       | Instance profile to use for the EC2 instance                                                |
+| volume-size                   | number     | No       | Volume size in GB to use for the EC2 instance                                               |
+| associate-public-ip-address   | boolean    | No       | Associate a public IP address to the instance                                               |
+| tags                          | string     | No       | Tags to apply to the EC2 instance. Format: JSON                                             |
+| user-data                     | string     | No       | User data to apply to the EC2 instance                                                      |
+| instance-shutdown-behavior    | string     | No       | Shutdown behavior for the EC2 instance. This may be stop or terminate. Default is terminate |
+| region                        | string     | Yes      | AWS region to use for the EC2 instance                                                      |
+| key-name                      | string     | No       | SSH key name to use for the EC2 instance                                                    |
+| terminate-on-post             | boolean    | No       | Terminate the EC2 instance after the post step. Default is true.                            |
 
-Install the dependencies  
+## Outputs
+| Name                          | Type       | Description                                                                                 |
+|-------------------------------|------------|---------------------------------------------------------------------------------------------|
+| instance-id                   | string     | Instance ID of the EC2 instance                                                             |
+
+## Development
+
+> Install `node version 16`
+
+Install the dependencies
 ```bash
 $ npm install
 ```
@@ -28,78 +54,7 @@ Build the typescript and package it for distribution
 $ npm run build && npm run package
 ```
 
-Run the tests :heavy_check_mark:  
+Run the tests :heavy_check_mark:
 ```bash
 $ npm test
-
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
 ```
-
-## Change action.yml
-
-The action.yml defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
-
-## Publish to a distribution branch
-
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
-
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
-```bash
-$ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
-```
-
-Note: We recommend using the `--license` option for ncc, which will create a license file for all of the production node modules used in your project.
-
-Your action is now published! :rocket: 
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
-
-```yaml
-uses: ./
-with:
-  milliseconds: 1000
-```
-
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
-
-## Usage:
-
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action

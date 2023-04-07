@@ -1,16 +1,29 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import {loadConfig} from './config'
+import * as path from 'path'
+import * as fs from 'fs'
+import {execaSync} from 'execa'
+import {setOutput} from '@actions/core'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
-
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
+    const config = loadConfig()
+    const sshDir = path.join(process.env['HOME'] ?? '', '.ssh')
+    fs.mkdirSync(sshDir, {recursive: true})
+    fs.chmodSync(sshDir, '700')
+    const filename = config.type === 'rsa' ? 'id_rsa' : 'id_ed25519'
+    const keyPath = path.join(sshDir, filename)
+    const pubKeyPath = path.join(sshDir, `${filename}.pub`)
+    if (config.type === 'rsa') {
+      execaSync(`ssh-keygen -t rsa -b 4096 -f ${keyPath} -q -N ""`)
+    } else {
+      execaSync(`ssh-keygen -t ed25519 -f ${keyPath} -q -N ""'`)
+    }
+    fs.chmodSync(keyPath, '600')
+    fs.chmodSync(pubKeyPath, '644')
+    setOutput('private-key-path', keyPath)
+    setOutput('public-key-path', pubKeyPath)
+    setOutput('public-key', fs.readFileSync(pubKeyPath, 'utf8'))
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
