@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import {loadConfig} from './config'
 import * as path from 'path'
 import * as fs from 'fs'
-import {execaCommandSync} from 'execa'
+import {execaSync} from 'execa'
 import {setOutput} from '@actions/core'
 
 async function run(): Promise<void> {
@@ -17,9 +17,9 @@ async function run(): Promise<void> {
     const keyPath = path.join(sshDir, filename)
     const pubKeyPath = path.join(sshDir, `${filename}.pub`)
     if (config.type === 'rsa') {
-      execaCommandSync(`ssh-keygen -t rsa -b 4096 -f ${keyPath} -N '' -q`)
+      execaSync('ssh-keygen', ['-t', 'rsa', '-b', '4096', '-f', keyPath, '-N', '', '-q'])
     } else {
-      execaCommandSync(`ssh-keygen -t ed25519 -f ${keyPath} -N '' -q`)
+      execaSync('ssh-keygen', ['-t', 'ed25519', '-f', keyPath, '-N', '', '-q'])
     }
     fs.chmodSync(keyPath, '600')
     fs.chmodSync(pubKeyPath, '644')

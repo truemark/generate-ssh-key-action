@@ -128,10 +128,10 @@ function run() {
             const keyPath = path.join(sshDir, filename);
             const pubKeyPath = path.join(sshDir, `${filename}.pub`);
             if (config.type === 'rsa') {
-                (0, execa_1.execaCommandSync)(`ssh-keygen -t rsa -b 4096 -f ${keyPath} -N '' -q`);
+                (0, execa_1.execaSync)('ssh-keygen', ['-t', 'rsa', '-b', '4096', '-f', keyPath, '-N', '', '-q']);
             }
             else {
-                (0, execa_1.execaCommandSync)(`ssh-keygen -t ed25519 -f ${keyPath} -N '' -q`);
+                (0, execa_1.execaSync)('ssh-keygen', ['-t', 'ed25519', '-f', keyPath, '-N', '', '-q']);
             }
             fs.chmodSync(keyPath, '600');
             fs.chmodSync(pubKeyPath, '644');
