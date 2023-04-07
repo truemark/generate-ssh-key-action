@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/truemark/generate-ssh-key-action.git"
   },
   "keywords": [
     "actions",
