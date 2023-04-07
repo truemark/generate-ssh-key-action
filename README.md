@@ -16,9 +16,6 @@ GitHub action used to generate an SSH key pair
         uses: truemark/generate-ssh-key-action@v1
 ```
 
-You can use default-arm64 and default-amd64 to get the latest Amazon Linux ARM.
-You can also use the AMI ID of your own AMI.
-
 ## Inputs
 
 | Name                        | Type       | Required | Description                                                                                                |
