@@ -22,7 +22,7 @@
     "node",
     "setup"
   ],
-  "author": "",
+  "author": "TrueMark",
   "license": "BSD-3-Clause",
   "dependencies": {
     "@actions/core": "^1.10.0",
