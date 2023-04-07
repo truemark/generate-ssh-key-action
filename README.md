@@ -11,7 +11,9 @@ GitHub action used to generate an SSH key pair
 ## Examples
 
 ```yml
-
+      - name: Generate SSH Key
+        id: ssh-key
+        uses: truemark/generate-ssh-key-action@v1
 ```
 
 You can use default-arm64 and default-amd64 to get the latest Amazon Linux ARM.
