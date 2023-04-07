@@ -61,7 +61,8 @@ function requiredValues(value, allowedValues) {
 exports.requiredValues = requiredValues;
 function loadConfig() {
     return {
-        type: requiredValues((0, core_1.getInput)('type'), ['rsa', 'ecdsa'])
+        type: requiredValues((0, core_1.getInput)('type'), ['rsa', 'ecdsa']),
+        name: (0, core_1.getInput)('name')
     };
 }
 exports.loadConfig = loadConfig;
@@ -114,14 +115,16 @@ const fs = __importStar(__nccwpck_require__(7147));
 const execa_1 = __nccwpck_require__(9956);
 const core_1 = __nccwpck_require__(2186);
 function run() {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const config = (0, config_1.loadConfig)();
             const sshDir = path.join((_a = process.env['HOME']) !== null && _a !== void 0 ? _a : '', '.ssh');
-            fs.mkdirSync(sshDir, { recursive: true });
-            fs.chmodSync(sshDir, '700');
-            const filename = config.type === 'rsa' ? 'id_rsa' : 'id_ed25519';
+            if (!fs.existsSync(sshDir)) {
+                fs.mkdirSync(sshDir, { recursive: true });
+                fs.chmodSync(sshDir, '700');
+            }
+            const filename = ((_b = config.name) !== null && _b !== void 0 ? _b : config.type === 'rsa') ? 'id_rsa' : 'id_ed25519';
             const keyPath = path.join(sshDir, filename);
             const pubKeyPath = path.join(sshDir, `${filename}.pub`);
             if (config.type === 'rsa') {

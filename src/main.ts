@@ -9,9 +9,11 @@ async function run(): Promise<void> {
   try {
     const config = loadConfig()
     const sshDir = path.join(process.env['HOME'] ?? '', '.ssh')
-    fs.mkdirSync(sshDir, {recursive: true})
-    fs.chmodSync(sshDir, '700')
-    const filename = config.type === 'rsa' ? 'id_rsa' : 'id_ed25519'
+    if (!fs.existsSync(sshDir)) {
+      fs.mkdirSync(sshDir, {recursive: true})
+      fs.chmodSync(sshDir, '700')
+    }
+    const filename = config.name ?? config.type === 'rsa' ? 'id_rsa' : 'id_ed25519'
     const keyPath = path.join(sshDir, filename)
     const pubKeyPath = path.join(sshDir, `${filename}.pub`)
     if (config.type === 'rsa') {

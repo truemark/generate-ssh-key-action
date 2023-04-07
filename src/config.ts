@@ -43,10 +43,12 @@ export function requiredValues(value: string, allowedValues: string[]): string {
 
 export interface Config {
   readonly type: string
+  readonly name: string
 }
 
 export function loadConfig(): Config {
   return {
-    type: requiredValues(getInput('type'), ['rsa', 'ecdsa'])
+    type: requiredValues(getInput('type'), ['rsa', 'ecdsa']),
+    name: getInput('name')
   }
 }

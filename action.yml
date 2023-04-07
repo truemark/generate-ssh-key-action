@@ -6,6 +6,9 @@ inputs:
     required: false
     description: 'Either rsa or ecdsa'
     default: 'ecdsa'
+  name:
+    required: false
+    description: 'The name of the key pair'
 runs:
   using: 'node16'
   main: 'dist/index.js'
