@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import {loadConfig} from './config'
 import * as path from 'path'
 import * as fs from 'fs'
-import {execaCommandSync, execaSync} from 'execa'
+import {execaCommandSync} from 'execa'
 import {setOutput} from '@actions/core'
 
 async function run(): Promise<void> {
