@@ -1,4 +1,4 @@
-# AWS EC2 Run Instance Action
+# Generate SSH Key Action
 
 [![LICENSE](https://img.shields.io/badge/license-BSD3-green)](LICENSE)
 [![Latest Release](https://img.shields.io/github/v/release/truemark/generate-ssh-key-action)](https://github.com/truemark/generate-ssh-key-action/releases)
