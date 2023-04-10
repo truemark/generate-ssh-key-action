@@ -15,10 +15,17 @@ jobs:
           npm install
       - run: |
           npm run all
-#  test: # make sure the action works on a clean machine without building
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#      - uses: ./
-#        with:
-#          milliseconds: 1000
+  test: # make sure the action works on a clean machine without building
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate SSH Key
+        uses: ./
+        with:
+          type: rsa
+      - name: Echo
+        run: |
+          echo "Public Key: ${{ steps.generate-ssh-key.outputs.public-key-path }}"
+          cat ${{ steps.generate-ssh-key.outputs.public-key-path }}
+          echo "Private Key: ${{ steps.generate-ssh-key.outputs.private-key-path }}"
+          cat ${{ steps.generate-ssh-key.outputs.private-key-path }}
+          echo "Public Key Variable: ${{ steps.generate-ssh-key.outputs.public-key }}"
