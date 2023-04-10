@@ -20,14 +20,27 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Generate SSH Key
+      - name: Generate RSA SSH Key
+        id: generate-ssh-key-rsa
         uses: ./
         with:
           type: rsa
-      - name: Echo
+      - name: Echo RSA
         run: |
-          echo "Public Key: ${{ steps.generate-ssh-key.outputs.public-key-path }}"
-          cat ${{ steps.generate-ssh-key.outputs.public-key-path }}
-          echo "Private Key: ${{ steps.generate-ssh-key.outputs.private-key-path }}"
+          echo "Public Key: ${{ steps.generate-ssh-key-rsa.outputs.public-key-path }}"
+          cat ${{ steps.generate-ssh-key-rsa.outputs.public-key-path }}
+          echo "Private Key: ${{ steps.generate-ssh-key-rsa.outputs.private-key-path }}"
           cat ${{ steps.generate-ssh-key.outputs.private-key-path }}
-          echo "Public Key Variable: ${{ steps.generate-ssh-key.outputs.public-key }}"
+          echo "Public Key Variable: ${{ steps.generate-ssh-key-rsa.outputs.public-key }}"
+      - name: Generate ECDSA SSH Key
+        id: generate-ssh-key-ecdsa
+        uses: ./
+        with:
+          type: ecdsa
+      - name: Echo ECDSA
+        run: |
+          echo "Public Key: ${{ steps.generate-ssh-key-ecdsa.outputs.public-key-path }}"
+          cat ${{ steps.generate-ssh-key-ecdsa.outputs.public-key-path }}
+          echo "Private Key: ${{ steps.generate-ssh-key-ecdsa.outputs.private-key-path }}"
+          cat ${{ steps.generate-ssh-key-ecdsa.outputs.private-key-path }}
+          echo "Public Key Variable: ${{ steps.generate-ssh-key-ecdsa.outputs.public-key }}"
