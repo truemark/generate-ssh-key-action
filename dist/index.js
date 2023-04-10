@@ -124,7 +124,7 @@ function run() {
                 fs.mkdirSync(sshDir, { recursive: true });
                 fs.chmodSync(sshDir, '700');
             }
-            const filename = ((_b = config.name) !== null && _b !== void 0 ? _b : config.type === 'rsa') ? 'id_rsa' : 'id_ed25519';
+            const filename = (_b = config.name) !== null && _b !== void 0 ? _b : (config.type === 'rsa' ? 'id_rsa' : 'id_ed25519');
             const keyPath = path.join(sshDir, filename);
             const pubKeyPath = path.join(sshDir, `${filename}.pub`);
             if (config.type === 'rsa') {
