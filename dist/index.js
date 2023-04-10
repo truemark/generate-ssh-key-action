@@ -115,7 +115,7 @@ const fs = __importStar(__nccwpck_require__(7147));
 const execa_1 = __nccwpck_require__(9956);
 const core_1 = __nccwpck_require__(2186);
 function run() {
-    var _a, _b;
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const config = (0, config_1.loadConfig)();
@@ -124,7 +124,7 @@ function run() {
                 fs.mkdirSync(sshDir, { recursive: true });
                 fs.chmodSync(sshDir, '700');
             }
-            const filename = (_b = config.name) !== null && _b !== void 0 ? _b : (config.type === 'rsa' ? 'id_rsa' : 'id_ed25519');
+            const filename = config.name ? config.name : (config.type === 'rsa' ? 'id_rsa' : 'id_ed25519');
             const keyPath = path.join(sshDir, filename);
             const pubKeyPath = path.join(sshDir, `${filename}.pub`);
             if (config.type === 'rsa') {
