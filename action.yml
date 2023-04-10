@@ -1,6 +1,9 @@
 name: 'Generate SSH Key Pair'
 description: 'Generates an SSH key pair'
 author: 'TrueMark'
+branding:
+  icon: 'check-circle'
+  color: 'red'
 inputs:
   type:
     required: false
