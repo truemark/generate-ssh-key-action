@@ -13,7 +13,7 @@ async function run(): Promise<void> {
       fs.mkdirSync(sshDir, {recursive: true})
       fs.chmodSync(sshDir, '700')
     }
-    const filename = config.name ?? config.type === 'rsa' ? 'id_rsa' : 'id_ed25519'
+    const filename = config.name ?? (config.type === 'rsa' ? 'id_rsa' : 'id_ed25519')
     const keyPath = path.join(sshDir, filename)
     const pubKeyPath = path.join(sshDir, `${filename}.pub`)
     if (config.type === 'rsa') {
