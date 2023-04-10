@@ -13,7 +13,7 @@ GitHub action used to generate an SSH key pair
 ```yml
       - name: Generate SSH Key
         id: ssh-key
-        uses: truemark/generate-ssh-key-action@v1
+        uses: truemark/generate-ssh-key-action@v2
 ```
 
 ## Inputs
